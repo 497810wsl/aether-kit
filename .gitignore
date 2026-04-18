@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Per-project (if user clones kit then runs aether init inside it)
+.aether/
+.cursor/
+
+# Local stats (if any scripts write here)
+*.local.json
