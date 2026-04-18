@@ -43,7 +43,7 @@ from typing import Any
 # Constants
 # -----------------------------------------------------------------------------
 
-AETHER_VERSION = "0.4.1-kit"
+AETHER_VERSION = "0.4.2-kit"
 ONTOLOGY_VERSION = 1
 DEFAULT_CORE_REPO = "https://raw.githubusercontent.com/497810wsl/aether-kit/main"
 STARTER_PRESET_FIELDS = ["linus-torvalds", "engineering-rigor", "jony-ive"]
@@ -390,7 +390,7 @@ def do_init(args: argparse.Namespace) -> int:
 
 
 FIELD_LOCATIONS = [
-    "fields/{fid}.field.md",
+    "kit/fields/{fid}.field.md",
 ]
 
 
@@ -693,9 +693,9 @@ def do_doctor(args: argparse.Namespace) -> int:
 
 
 def _try_read_local_showcase() -> dict | None:
-    """Try to find showcase.json next to the script (in Aether Core)."""
+    """Try to find showcase.json next to the script (in the kit layout)."""
     script_dir = Path(__file__).resolve().parent.parent
-    candidate = script_dir / "demo" / "showcase.json"
+    candidate = script_dir / "kit" / "demo" / "showcase.json"
     if candidate.exists():
         return json.loads(candidate.read_text(encoding="utf-8"))
     return None
@@ -703,7 +703,7 @@ def _try_read_local_showcase() -> dict | None:
 
 def _fetch_remote_showcase(base_url: str) -> dict | None:
     try:
-        raw = http_get(f"{base_url}/demo/showcase.json")
+        raw = http_get(f"{base_url}/kit/demo/showcase.json")
         return json.loads(raw)
     except Exception:
         return None

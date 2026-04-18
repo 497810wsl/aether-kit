@@ -7,13 +7,41 @@
 **Weighted style fields for Cursor, Claude, any LLM — zero dependencies, MIT.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Install: 30s](https://img.shields.io/badge/Install-30_seconds-ff69b4.svg)](#install)
+[![Install: 30s](https://img.shields.io/badge/Install-30_seconds-ff69b4.svg)](#30-seconds)
 [![Works with](https://img.shields.io/badge/Works_with-Cursor_·_Claude_·_GPT-brightgreen.svg)]()
-[![Version](https://img.shields.io/badge/version-0.4.1--kit-blue.svg)](./bin/aether.py)
+[![Version](https://img.shields.io/badge/version-0.4.2--kit-blue.svg)](./bin/aether.py)
 
-**[Install](#install)** · **[What is a field?](./FIELDS.md)** · **[Presets](./PRESETS.md)** · **[Agents guide](./AGENTS.md)** · **[Recipes](./recipes/)**
+**[Install](#30-seconds)** · **[What is a field?](./kit/FIELDS.md)** · **[Presets](./kit/PRESETS.md)** · **[Agents guide](./AGENTS.md)** · **[Recipes](./kit/recipes/)**
 
 </div>
+
+---
+
+## Repo layout · 5 top-level items
+
+```
+aether-kit/
+├── README.md      ← you are here · start here
+├── AGENTS.md      ← contract for any AI that opens this repo
+├── LICENSE        ← MIT
+├── bin/           ← CLI · the only thing you invoke directly
+│   ├── aether · aether.cmd · aether.py
+└── kit/           ← everything else · content · don't touch by hand
+    ├── INSTALL.md · FIELDS.md · PRESETS.md · CONTRIBUTING.md · AGENTS.md
+    ├── fields/         9 starter .field.md files (MIT forever)
+    ├── presets/        5 one-line activation shortcuts
+    ├── recipes/        example use cases
+    ├── templates/      cursor rule template (used by `aether init`)
+    ├── tools/          fingerprint.py · verify a field actually fired
+    ├── demo/           showcase.json · powers `aether demo`
+    └── docs/           contact.md · Pro purchase flow
+```
+
+**Why this layout?** Two rules:
+- **Root is an index** (5 items · 4 seconds to orient)
+- **`bin/` stays at root** so `~/aether/bin/aether init` keeps working, matching what was published before `v0.4.2-kit`
+
+If you want to vendor this kit into your own monorepo as `vendor/aether-kit/` — great, the 5-item root keeps your directory listings clean.
 
 ---
 
@@ -28,33 +56,16 @@
 **Two-location model at a glance**:
 
 ```
-~/aether/                          ← the kit (this repo · ~30 files · stays put)
+~/aether/                          ← the kit (this repo · stays put)
 ├── bin/aether.py                  ← CLI
-├── fields/*.field.md              ← 9 starter fields
-└── presets/*.preset               ← 5 one-line activations
+└── kit/
+    ├── fields/*.field.md          ← 9 starter fields
+    └── presets/*.preset           ← 5 one-line activations
 
 <your-project>/
 ├── .aether/fields/                ← created by `aether init` · small
 └── .cursor/rules/aether.mdc       ← created by `aether init` · tells Cursor the rules
 ```
-
----
-
-## What's in this directory
-
-| Path | What it is | Need to open? |
-|---|---|---|
-| [`bin/`](./bin/) | CLI entry points (`aether.py` · `aether.cmd`) | No · run via `aether init` etc. |
-| [`fields/`](./fields/) | 9 MIT starter `.field.md` files | If curious how a field is defined |
-| [`presets/`](./presets/) | 5 one-line activation shortcuts | **Yes — copy-paste from here** |
-| [`recipes/`](./recipes/) | Example use cases(md) | Optional reading |
-| [`templates/aether.mdc.template`](./templates/) | Cursor rule that installs into your project | No · `aether init` handles it |
-| [`tools/fingerprint.py`](./tools/) | Verify a field fired via math distance | When you want proof |
-| [`demo/`](./demo/) | Scenario data for `aether demo` command | Run via `aether demo` |
-| [`docs/contact.md`](./docs/contact.md) | Maintainer contact · Pro purchase | If buying / collaborating |
-| [`README.md`](./README.md) · [`INSTALL.md`](./INSTALL.md) · [`FIELDS.md`](./FIELDS.md) · [`PRESETS.md`](./PRESETS.md) · [`CONTRIBUTING.md`](./CONTRIBUTING.md) · [`AGENTS.md`](./AGENTS.md) | Docs, read on demand | — |
-
-**Most users only ever touch `presets/` after install.** Everything else is scaffolding.
 
 ---
 
@@ -86,7 +97,7 @@ Open Cursor in your project. In any chat, paste one line:
 activate linus-torvalds=0.8, engineering-rigor=0.9, cold-to-warm=-0.2
 ```
 
-That's the **code-reviewer** preset. 4 more in [`presets/`](./presets/):
+That's the **code-reviewer** preset. 4 more in [`kit/presets/`](./kit/presets/):
 `debugger` · `tech-writer` · `architect` · `researcher`.
 
 ### 3. Watch the difference
@@ -113,7 +124,7 @@ Aether fixes the three:
 |---|---|---|
 | Activation | hardcoded rulebook | `linus=0.9, ive=0.3` · tunable dials in `[-1, 1]` |
 | Negation | can only say "do X" | `linkedin=-0.8` actively repels LinkedIn voice |
-| Measurable | unknowable | `python tools/fingerprint.py` returns a math distance |
+| Measurable | unknowable | `python kit/tools/fingerprint.py` returns a math distance |
 
 One line in your project. Your existing `.cursorrules` keeps working — Aether writes to a separate `.cursor/rules/aether.mdc`.
 
@@ -124,7 +135,7 @@ One line in your project. Your existing `.cursorrules` keeps working — Aether 
 You don't memorize parameters. You pick a preset.
 
 ```
-presets/
+kit/presets/
 ├── code-reviewer.preset    → severity-tiered code review
 ├── debugger.preset         → stack-trace + blast-radius mode
 ├── tech-writer.preset      → restrained, precise prose
@@ -134,7 +145,7 @@ presets/
 
 Each preset is **one file** · **one line to paste** · **one workflow**.
 
-See [PRESETS.md](./PRESETS.md) for how to pick, combine, and write your own.
+See [kit/PRESETS.md](./kit/PRESETS.md) for how to pick, combine, and write your own.
 
 ---
 
@@ -142,15 +153,15 @@ See [PRESETS.md](./PRESETS.md) for how to pick, combine, and write your own.
 
 | Field | Type | Purpose |
 |---|---|---|
-| [`linus-torvalds`](./fields/linus-torvalds.field.md) | style | direct · severity-tiered · no hedge words |
-| [`jony-ive`](./fields/jony-ive.field.md) | style | restraint · material · warm minimalism |
-| [`nolan`](./fields/nolan.field.md) | style | non-linear · time-gradient · subtext |
-| [`engineering-rigor`](./fields/engineering-rigor.field.md) | discipline | correctness · blast-radius · failure modes |
-| [`cold-to-warm`](./fields/cold-to-warm.field.md) | temperament | tone dial from impersonal to warm |
-| [`brainstorm`](./fields/brainstorm.field.md) | action | divergent · 10+ ideas before ranking |
-| [`deep-thinking`](./fields/deep-thinking.field.md) | action | recursive why · question premises |
-| [`research`](./fields/research.field.md) | action | fact-backed · source-cited |
-| [`code-generator`](./fields/code-generator.field.md) | capability | matches project style · minimal · complete |
+| [`linus-torvalds`](./kit/fields/linus-torvalds.field.md) | style | direct · severity-tiered · no hedge words |
+| [`jony-ive`](./kit/fields/jony-ive.field.md) | style | restraint · material · warm minimalism |
+| [`nolan`](./kit/fields/nolan.field.md) | style | non-linear · time-gradient · subtext |
+| [`engineering-rigor`](./kit/fields/engineering-rigor.field.md) | discipline | correctness · blast-radius · failure modes |
+| [`cold-to-warm`](./kit/fields/cold-to-warm.field.md) | temperament | tone dial from impersonal to warm |
+| [`brainstorm`](./kit/fields/brainstorm.field.md) | action | divergent · 10+ ideas before ranking |
+| [`deep-thinking`](./kit/fields/deep-thinking.field.md) | action | recursive why · question premises |
+| [`research`](./kit/fields/research.field.md) | action | fact-backed · source-cited |
+| [`code-generator`](./kit/fields/code-generator.field.md) | capability | matches project style · minimal · complete |
 
 Want more? Premium fields (`staff-engineer`, `product-designer`, `borges`, `zhang-ailing`) are part of **Aether Pro** — see contact info at the bottom.
 
@@ -167,13 +178,13 @@ aether status
 aether version
 ```
 
-Zero dependencies · Python 3.8+ stdlib only · 870 lines · [`bin/aether.py`](./bin/aether.py).
+Zero dependencies · Python 3.8+ stdlib only · ~920 lines · [`bin/aether.py`](./bin/aether.py).
 
 ---
 
 ## Verify it fires
 
-Run [`tools/fingerprint.py`](./tools/fingerprint.py) on the AI's response before and after activation. A non-zero math distance = the field actually shifted the output distribution. No guessing, no vibes.
+Run [`kit/tools/fingerprint.py`](./kit/tools/fingerprint.py) on the AI's response before and after activation. A non-zero math distance = the field actually shifted the output distribution. No guessing, no vibes.
 
 ---
 
@@ -213,7 +224,7 @@ Cursor rules fire on filename matches. Aether fields fire on user activation and
 
 ## Contributing
 
-Found a field that should exist? Write one and PR. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+Found a field that should exist? Write one and PR. See [kit/CONTRIBUTING.md](./kit/CONTRIBUTING.md).
 
 ---
 

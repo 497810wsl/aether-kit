@@ -132,4 +132,4 @@ One maintainer, real life. Patience appreciated.
 
 ---
 
-*See also*: [README.md](./README.md) · [FIELDS.md](./FIELDS.md) · [PRESETS.md](./PRESETS.md)
+*See also*: [README.md](../README.md) · [FIELDS.md](./FIELDS.md) · [PRESETS.md](./PRESETS.md)
