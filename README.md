@@ -11,9 +11,50 @@
 [![Works with](https://img.shields.io/badge/Works_with-Cursor_·_Claude_·_GPT-brightgreen.svg)]()
 [![Version](https://img.shields.io/badge/version-0.4.1--kit-blue.svg)](./bin/aether.py)
 
-**[Install](#install)** · **[What is a field?](./FIELDS.md)** · **[Presets](./PRESETS.md)** · **[Recipes](./recipes/)**
+**[Install](#install)** · **[What is a field?](./FIELDS.md)** · **[Presets](./PRESETS.md)** · **[Agents guide](./AGENTS.md)** · **[Recipes](./recipes/)**
 
 </div>
+
+---
+
+## You just cloned the kit — now what?
+
+**This repo is a toolbox that stays in one place.** Fields and the CLI live here. You **don't** drop this whole folder into each of your projects. Instead:
+
+1. Clone this repo once, to a stable location (e.g. `~/aether`).
+2. For each project where you want Aether, run `aether init` **from inside that project**. This creates a small `.aether/` folder (just config + field copies) and a `.cursor/rules/aether.mdc` rule — the only two things your project gains.
+3. Your actual code stays untouched. Your existing `.cursorrules` keeps working.
+
+**Two-location model at a glance**:
+
+```
+~/aether/                          ← the kit (this repo · ~30 files · stays put)
+├── bin/aether.py                  ← CLI
+├── fields/*.field.md              ← 9 starter fields
+└── presets/*.preset               ← 5 one-line activations
+
+<your-project>/
+├── .aether/fields/                ← created by `aether init` · small
+└── .cursor/rules/aether.mdc       ← created by `aether init` · tells Cursor the rules
+```
+
+---
+
+## What's in this directory
+
+| Path | What it is | Need to open? |
+|---|---|---|
+| [`bin/`](./bin/) | CLI entry points (`aether.py` · `aether.cmd`) | No · run via `aether init` etc. |
+| [`fields/`](./fields/) | 9 MIT starter `.field.md` files | If curious how a field is defined |
+| [`presets/`](./presets/) | 5 one-line activation shortcuts | **Yes — copy-paste from here** |
+| [`recipes/`](./recipes/) | Example use cases(md) | Optional reading |
+| [`templates/aether.mdc.template`](./templates/) | Cursor rule that installs into your project | No · `aether init` handles it |
+| [`tools/fingerprint.py`](./tools/) | Verify a field fired via math distance | When you want proof |
+| [`demo/`](./demo/) | Scenario data for `aether demo` command | Run via `aether demo` |
+| [`docs/contact.md`](./docs/contact.md) | Maintainer contact · Pro purchase | If buying / collaborating |
+| [`README.md`](./README.md) · [`INSTALL.md`](./INSTALL.md) · [`FIELDS.md`](./FIELDS.md) · [`PRESETS.md`](./PRESETS.md) · [`CONTRIBUTING.md`](./CONTRIBUTING.md) · [`AGENTS.md`](./AGENTS.md) | Docs, read on demand | — |
+
+**Most users only ever touch `presets/` after install.** Everything else is scaffolding.
 
 ---
 
