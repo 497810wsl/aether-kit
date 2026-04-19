@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "_comment": "Aether Kit · user-level hooks · installed by aether-kit/scripts/install-hook.{ps1,sh} · remove with uninstall-hook or delete this file",
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "python ~/.cursor/hooks/aether-dispatch.py",
+        "timeout": 30
+      }
+    ]
+  }
+}

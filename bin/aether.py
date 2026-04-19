@@ -43,7 +43,7 @@ from typing import Any
 # Constants
 # -----------------------------------------------------------------------------
 
-AETHER_VERSION = "0.4.2-kit"
+AETHER_VERSION = "0.4.3-kit"
 ONTOLOGY_VERSION = 1
 DEFAULT_CORE_REPO = "https://raw.githubusercontent.com/497810wsl/aether-kit/main"
 STARTER_PRESET_FIELDS = ["linus-torvalds", "engineering-rigor", "jony-ive"]

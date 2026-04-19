@@ -9,7 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Install: 30s](https://img.shields.io/badge/Install-30_seconds-ff69b4.svg)](#30-seconds)
 [![Works with](https://img.shields.io/badge/Works_with-Cursor_·_Claude_·_GPT-brightgreen.svg)]()
-[![Version](https://img.shields.io/badge/version-0.4.2--kit-blue.svg)](./bin/aether.py)
+[![Version](https://img.shields.io/badge/version-0.4.3--kit-blue.svg)](./bin/aether.py)
 
 **[Install](#30-seconds)** · **[What is a field?](./kit/FIELDS.md)** · **[Presets](./kit/PRESETS.md)** · **[Agents guide](./AGENTS.md)** · **[Recipes](./kit/recipes/)**
 
@@ -17,16 +17,18 @@
 
 ---
 
-## Repo layout · 5 top-level items
+## Repo layout · 6 top-level items
 
 ```
 aether-kit/
 ├── README.md      ← you are here · start here
 ├── AGENTS.md      ← contract for any AI that opens this repo
 ├── LICENSE        ← MIT
-├── bin/           ← CLI · the only thing you invoke directly
+├── bin/           ← per-project CLI · `aether init` / `demo` / `fetch` / ...
 │   ├── aether · aether.cmd · aether.py
-└── kit/           ← everything else · content · don't touch by hand
+├── scripts/       ← global-install helpers (new in 0.4.3)
+│   ├── install-hook.{ps1,sh} · uninstall-hook.{ps1,sh}
+└── kit/           ← all content · fields · docs · global-hook source
     ├── INSTALL.md · FIELDS.md · PRESETS.md · CONTRIBUTING.md · AGENTS.md
     ├── fields/         9 starter .field.md files (MIT forever)
     ├── presets/        5 one-line activation shortcuts
@@ -34,7 +36,8 @@ aether-kit/
     ├── templates/      cursor rule template (used by `aether init`)
     ├── tools/          fingerprint.py · verify a field actually fired
     ├── demo/           showcase.json · powers `aether demo`
-    └── docs/           contact.md · Pro purchase flow
+    ├── docs/           contact.md · Pro purchase flow
+    └── .cursor-global/ source for global hook · copied to ~/.cursor/ by installer
 ```
 
 **Why this layout?** Two rules:
@@ -107,6 +110,45 @@ Same AI. Same question. Different output.
 | Without Aether | With `linus=0.9, rigor=0.9` |
 |---|---|
 | *"Here are some suggestions: consider Promise.all... use parameterized queries..."* | **"Three bugs, one catastrophic. Line 3 is SQL injection. Fix it now. Everything else can wait."** |
+
+---
+
+## Install globally (new in 0.4.3) · one hook · every workspace
+
+The per-project install above gives you fields and presets. The **global hook** gives you something else: any workspace with an `aether/bin/aether_hook.py` file auto-handshakes on Cursor session start · no per-project hook config, no manual `handshake` keyword. Non-Aether workspaces stay completely untouched.
+
+```powershell
+# Windows · PowerShell
+git clone https://github.com/497810wsl/aether-kit $HOME\aether-kit
+& "$HOME\aether-kit\scripts\install-hook.ps1"
+```
+
+```bash
+# macOS / Linux
+git clone https://github.com/497810wsl/aether-kit ~/aether-kit
+~/aether-kit/scripts/install-hook.sh
+```
+
+Then restart Cursor. The installer:
+
+- Copies `aether-dispatch.py` to `~/.cursor/hooks/`
+- Copies `aether.mdc` to `~/.cursor/rules/` (user-level rule · opt-out friendly)
+- Merges the hook entry into `~/.cursor/hooks.json` (preserves any other user hooks you have)
+
+To remove: `install-hook.ps1` → `uninstall-hook.ps1` (or the `.sh` variant).
+
+### What the global hook does
+
+On every new Cursor session, the dispatcher:
+
+1. Reads Cursor's `workspace_roots[0]` from the event payload
+2. Checks if that workspace contains `aether/bin/aether_hook.py`
+3. **If yes** → execs the project's hook · injects its project-specific briefing (Day/health/handover/recent collapses) into `additional_context`
+4. **If no** → returns `{}` · zero effect · you won't notice the hook is even installed
+
+The companion rule (`~/.cursor/rules/aether.mdc`) tells the AI to quote a one-line status marker as the first line of its first response when a briefing is present · the visible signal that the hook fired.
+
+**Safe to install if you only use Aether in one project** · all other Cursor workspaces behave exactly as before.
 
 ---
 

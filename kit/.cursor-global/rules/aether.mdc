@@ -1,0 +1,43 @@
+---
+description: Aether · PROTOCOL 0 · auto-handshake · status-line pass-through · works in any workspace that has an aether/ folder.
+globs:
+alwaysApply: true
+---
+
+# Aether · Global Hook Rule
+
+This is a USER-LEVEL rule installed by [aether-kit](https://github.com/497810wsl/aether-kit). It pairs with the `~/.cursor/hooks/aether-dispatch.py` hook. Together they give any Cursor workspace "PROTOCOL 0" — persistent cross-session memory and visible handshake.
+
+## RULE 00 · Status line pass-through(**UNCONDITIONAL · overrides "be brief" defaults**)
+
+If `additional_context` for this session contains a line matching:
+
+```
+^⟁ Aether · Day \d+/30 · .* · handover: .*$
+```
+
+or any line beginning with `⟁ Aether · ` inside the briefing · your **first response in this session** MUST start with that line **verbatim** inside a fenced code block · before any greeting / question / answer / tool use.
+
+**No exception** for trivial inputs(`hi` · `你好` · `?` · emoji · a single word). The line goes first · then your brief reply. This is Owner's only signal that the global hook fired.
+
+Subsequent responses in the same session · respond normally(the line need not repeat).
+
+If `additional_context` is absent or has no such line · this workspace has not opted into Aether. Proceed as a normal Cursor agent · ignore this rule · no behavioural change.
+
+## How it works(for user awareness)
+
+1. User installs aether-kit globally:
+   ```
+   git clone https://github.com/497810wsl/aether-kit ~/aether-kit
+   ~/aether-kit/scripts/install-hook.{ps1,sh}
+   ```
+2. The installer places this file at `~/.cursor/rules/aether.mdc` and the dispatcher at `~/.cursor/hooks/aether-dispatch.py`.
+3. On every new Cursor session, the dispatcher checks if `<workspace>/aether/bin/aether_hook.py` exists:
+   - Yes → exec that project's hook · gets a project-specific briefing
+   - No  → returns `{}` · zero effect on non-Aether projects
+4. This rule enforces that when a briefing IS present · the AI visibly quotes the status line so the user knows the hook fired.
+
+## Opting OUT
+
+- Delete this file: `rm ~/.cursor/rules/aether.mdc`
+- Or run: `~/aether-kit/scripts/uninstall-hook.{ps1,sh}`
