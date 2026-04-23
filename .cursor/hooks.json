@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "_comment": "Aether Cursor hooks · rationale in aether/docs/HOOKS.md · do NOT inline role/architecture notes here (coll-0084)",
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "python aether/bin/aether_hook.py --event sessionStart",
+        "timeout": 30
+      },
+      {
+        "command": "python aether/bin/aether_guardian.py --once",
+        "timeout": 20
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "python aether/bin/aether_hook.py --event postToolUse",
+        "timeout": 5
+      }
+    ],
+    "afterAgentResponse": [
+      {
+        "command": "python aether/bin/aether_hook.py --event afterAgentResponse",
+        "timeout": 5
+      }
+    ],
+    "preCompact": [
+      {
+        "command": "python aether/bin/aether_hook.py --event preCompact",
+        "timeout": 10
+      }
+    ],
+    "afterAgentThought": [
+      {
+        "command": "python aether/bin/aether_hook.py --event afterAgentThought",
+        "timeout": 5
+      }
+    ],
+    "postToolUseFailure": [
+      {
+        "command": "python aether/bin/aether_hook.py --event postToolUseFailure",
+        "timeout": 5
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "python aether/bin/aether_hook.py --event beforeShellExecution",
+        "timeout": 5
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": "python aether/bin/aether_hook.py --event sessionEnd",
+        "timeout": 60
+      }
+    ],
+    "stop": [
+      {
+        "command": "python aether/bin/aether_hook.py --event stop",
+        "timeout": 30
+      }
+    ]
+  }
+}

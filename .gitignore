@@ -1,0 +1,65 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# aether-kit .gitignore · minimal safe · Day 13 form α
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ─── OS · Editor · Env ───
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.log
+tmp/
+temp/
+*.tmp
+.env
+.env.local
+.env.*.local
+
+# ─── Secrets · keys · NEVER COMMIT ───
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+*credentials*.json
+*service-account*.json
+
+# ─── Python ───
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+
+# ─── Node (future use) ───
+node_modules/
+dist/
+build/
+
+# ─── Cursor · local runtime state ───
+# Keep: .cursor/rules/aether.mdc + .cursor/hooks.json (shipped)
+# Ignore: hook discovery logs · local-only state
+.cursor/hooks/.discovery/
+.cursor/hooks/.session-state/
+.cursor/transcripts/
+.cursor/projects/
+
+# ─── Aether runtime · never commit ───
+# If you run `aether project init` · .aether/ contains your private memory
+# (events · coll · handovers · transcripts · agent-responses). 永远不 commit.
+.aether/
+.aether-core/
+.aether-persona/
+
+# Per-user install manifest
+.aether-install.json
