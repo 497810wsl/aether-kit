@@ -56,11 +56,23 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+# v0.3.1 (2026-04-25) · UTF-8 stdout/stderr guard for Windows GBK console.
+# aether-kit users on Chinese / Japanese Windows hit UnicodeEncodeError
+# when the CLI prints field names and status glyphs containing CJK or
+# special punctuation (U+27C1, U+2194, U+2713, etc.). No-op on non-Windows
+# or Python < 3.7.
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
+
 # -----------------------------------------------------------------------------
 # Constants
 # -----------------------------------------------------------------------------
 
-AETHER_VERSION = "0.3.0"
+AETHER_VERSION = "0.3.1"
 ONTOLOGY_VERSION = 1
 DEFAULT_CORE_REPO = "https://raw.githubusercontent.com/497810wsl/aether-kit/main"
 STARTER_PRESET_FIELDS = ["linus-torvalds", "engineering-rigor", "jony-ive"]
